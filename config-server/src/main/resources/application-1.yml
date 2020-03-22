@@ -1,0 +1,18 @@
+server:
+  port: 8901
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git: #配置存储配置信息的Git仓库
+          search-paths: '{application}'
+          uri: https://gitee.com/Dr5hx/springcloud.git
+          username:
+          password:
+          clone-on-start: true #开启启动时直接从git获取配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
