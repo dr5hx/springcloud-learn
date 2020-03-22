@@ -1,0 +1,27 @@
+server:
+  port: 8800
+spring:
+  application:
+    name: zuul-proxy
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+zuul:
+  routes: #给服务配置路由
+    user-service:
+      path: /userService/**
+    feign-service:
+      path: /feignService/**
+  sensitive-headers: Cookie,Set-Cookie,Authorization #配置过滤敏感的请求头信息，设置为空就不会过滤
+  add-host-header: true #设置为true重定向是会添加host请求头
+  PreLogFilter:
+    pre:
+      disable: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'routes'
