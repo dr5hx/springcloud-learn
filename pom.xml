@@ -44,6 +44,10 @@
         <module>config-server</module>
         <module>config-client</module>
         <module>config-security-server</module>
+        <module>consul-user-service</module>
+        <module>consul-ribbon-service</module>
+        <module>consul-config-client</module>
+        <module>api-gateway</module>
     </modules>
     <dependencyManagement>
         <dependencies>
