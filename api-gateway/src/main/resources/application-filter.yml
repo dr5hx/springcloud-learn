@@ -1,14 +1,91 @@
 server:
   port: 9200
+#  AddRequestParameter GatewayFilter
+#给请求添加参数的过滤器。
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: add_request_parameter_route
+#          uri: http://localhost:8200
+#          filters:
+#            - AddRequestParameter=username, macro
+#          predicates:
+#            - Method=GET
+
+#  StripPrefix GatewayFilter
+#  对指定数量的路径前缀进行去除的过滤器。
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: strip_prefix_route
+#          uri: http://localhost:8201
+#          predicates:
+#            - Path=/user-service/**
+#          filters:
+#            - StripPrefix=2
+
+#  PrefixPath GatewayFilter
+#  与StripPrefix过滤器恰好相反，会对原有路径进行增加操作的过滤器。
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: prefix_path_route
+#          uri: http://localhost:8201
+#          predicates:
+#            - Method=GET
+#          filters:
+#            - PrefixPath=/user
+
+
+#Hystrix 过滤器允许你将断路器功能添加到网关路由中，使你的服务免受级联故障的影响，并提供服务降级处理。
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: hystrix_route
+#          uri: http://localhost:8200
+#          predicates:
+#            - Method=GET
+#          filters:
+#            - name: Hystrix
+#              args:
+#                name: fallbackcmd
+#                fallbackUri: forward:/fallback
+
+#RequestRateLimiter GatewayFilter RequestRateLimiter 过滤器可以用于限流
+#spring:
+#  redis:
+#    host: localhost
+#    password: 123456
+#    port: 6379
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: requestratelimiter_route
+#          uri: http://localhost:8200
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+#                redis-rate-limiter.replenishRate: 1 #每秒允许处理的请求数量
+#                redis-rate-limiter.burstCapacity: 2 #每秒最大处理的请求数量
+#                key-resolver: "#{@ipKeyResolver}" #限流策略，对应策略的Bean
+#          predicates:
+#            - Method=GET
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: debug
+
+# Retry GatewayFilter
+# 对路由请求进行重试的过滤器，可以根据路由请求返回的HTTP状态码来确定是否进行重试。
 spring:
-  redis:
-    host: localhost
-    port: 6379
   cloud:
     gateway:
       routes:
         - id: retry_route
-          uri: http://localhost:8201
+          uri: http://localhost:8200
           predicates:
             - Method=GET
           filters:
@@ -21,6 +98,3 @@ spring:
                   maxBackoff: 50ms
                   factor: 2
                   basedOnPreviousValue: false
-logging:
-  level:
-    org.springframework.cloud.gateway: debug
