@@ -22,6 +22,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <learn.version>1.0-SNAPSHOT</learn.version>
+        <springboot-admin.version>2.1.5</springboot-admin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -48,6 +49,10 @@
         <module>consul-ribbon-service</module>
         <module>consul-config-client</module>
         <module>api-gateway</module>
+        <module>admin-server</module>
+        <module>admin-client</module>
+        <module>admin-security-server</module>
+        <module>oauth2-server</module>
     </modules>
     <dependencyManagement>
         <dependencies>
